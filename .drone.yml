@@ -11,7 +11,7 @@ build:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     commands:
-      - python3 /scripts/images/build.py
+      - python3 -u /scripts/images/build.py
       
   spectests:
     when:
@@ -41,5 +41,6 @@ build:
      - DOCKERHUB_PASSWORD=$$DOCKERHUB_PASSWORD
      - DEPENDENCY_GRAPH_URL=$$DEPENDENCY_GRAPH_URL
      - BUILD_TRIGGER_API_URL=$$BUILD_TRIGGER_API_URL
+     - SHARED_BUILD_STORAGE=$$SHARED_BUILD_STORAGE
     commands:
-     - python3 /scripts/images/publish.py
+     - python3 -u /scripts/images/publish.py
