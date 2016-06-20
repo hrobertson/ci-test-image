@@ -1,4 +1,10 @@
 build:
+  test:
+    image: 1and1internet/ubuntu-16
+    environment:
+      - DOCKERHUB_USERNAME=$$DOCKERHUB_USERNAME
+    commands:
+      - echo $DOCKERHUB_USERNAME
   build:
     when:
       event: push
