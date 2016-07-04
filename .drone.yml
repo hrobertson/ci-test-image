@@ -12,8 +12,6 @@ build:
       - /var/run/docker.sock:/var/run/docker.sock
     commands:
       - python3 -u /scripts/images/build.py
-      - 'echo "CI_JOB_ID: $CI_JOB_ID"'
-      - 'echo "CI_JOB_NUMBER: $CI_JOB_NUMBER"'
       
   spectests:
     when:
@@ -22,7 +20,7 @@ build:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     commands:
-      - export IMAGE=dronebuild$DRONE_BUILD_NUMBER/${CI_REPO#*/}
+      - export IMAGE=dronejob$CI_JOB_ID/${CI_REPO#*/}
       - rspec -f documentation tests/serverspec.rb
       
   publish:
