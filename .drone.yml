@@ -12,6 +12,8 @@ build:
       - /var/run/docker.sock:/var/run/docker.sock
     commands:
       - python3 -u /scripts/images/build.py
+      - echo "CI_JOB_ID: $CI_JOB_ID"
+      - echo "CI_JOB_NUMBER: $CI_JOB_NUMBER"
       
   spectests:
     when:
