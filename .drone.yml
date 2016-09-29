@@ -26,7 +26,6 @@ build:
       
   publish:
     when:
-      branch: master
       event: push
     image: fhautomateddev/library-ci-tools
     auth_config:
