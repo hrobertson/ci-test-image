@@ -16,7 +16,7 @@ build:
   spectests:
     when:
       event: push
-    image: astrolox/ubuntu-16-rspec
+    image: 1and1internet/ubuntu-16-rspec
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     commands:
