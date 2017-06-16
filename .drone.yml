@@ -1,14 +1,11 @@
-build:
+pipeline:
   build:
     when:
       event: push
     image: fhautomateddev/library-ci-tools
     pull: true
-    auth_config:
-      username: $$DOCKERHUB_USERNAME
-      password: $$DOCKERHUB_PASSWORD
-      email: $$DOCKERHUB_EMAIL
     volumes:
+      - /secrets:/secrets
       - /var/run/docker.sock:/var/run/docker.sock
     commands:
       - python3 -u /scripts/images/build.py
@@ -18,23 +15,21 @@ build:
       event: push
     image: 1and1internet/ubuntu-16-rspec
     volumes:
+      - /secrets:/secrets
       - /var/run/docker.sock:/var/run/docker.sock
     commands:
-      - export IMAGE=dronejob$CI_JOB_ID/${CI_REPO#*/}
-      - echo $IMAGE
+      - export IMAGE=dronejob${CI_JOB_ID}/${CI_REPO#*/}
+      - echo ${IMAGE}
       - rspec -f documentation tests/serverspec.rb
       
   publish:
     when:
       event: push
     image: fhautomateddev/library-ci-tools
-    auth_config:
-     username: $$DOCKERHUB_USERNAME
-     password: $$DOCKERHUB_PASSWORD
-     email: $$DOCKERHUB_EMAIL
     volumes:
-     - /var/run/docker.sock:/var/run/docker.sock
-     - $$SHARED_BUILD_STORAGE:/tmp/image-comparison
+      - /secrets:/secrets
+      - /var/run/docker.sock:/var/run/docker.sock
+      - $$SHARED_BUILD_STORAGE:/tmp/image-comparison
     environment:
      - DOCKERHUB_USERNAME=$$DOCKERHUB_USERNAME
      - DOCKERHUB_EMAIL=$$DOCKERHUB_EMAIL
